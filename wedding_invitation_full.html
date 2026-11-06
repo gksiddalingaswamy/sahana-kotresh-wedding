@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#54251c">
+<title>Royal Wedding Invitation | Sahana & Kotresh</title>
+
+<style>
+:root {
+  --cream: #fff5e7;
+  --cream-card: #fffaf1;
+  --gold: #a16b27;
+  --gold-light: #d6ae69;
+  --maroon: #762d25;
+  --brown: #54251c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Georgia, serif;
+  background: var(--cream);
+  color: var(--brown);
+  text-align: center;
+  overflow-x: hidden;
+}
+
+/* OPENING SCREEN */
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: radial-gradient(circle, #70402c, #160d16);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  color: #f7d88c;
+  padding: 24px;
+  transition: opacity 1.5s ease;
+}
+
+.palace {
+  font-size: 85px;
+  margin-bottom: 25px;
+  animation: glow 2s infinite alternate, float 3s ease-in-out infinite;
+}
+
+#intro h1 {
+  font-size: clamp(28px, 8vw, 42px);
+  letter-spacing: 5px;
+  margin-bottom: 30px;
+}
+
+#intro p {
+  margin-bottom: 30px;
+  letter-spacing: 4px;
+}
+
+#enter {
+  padding: 15px 35px;
+  border: 1px solid #ffdf8c;
+  border-radius: 40px;
+  background: linear-gradient(45deg, #a76b18, #f7d88c);
+  color: #401b12;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  animation: pulse 1.5s infinite;
+}
+
+/* MAIN WEBSITE */
+#main {
+  display: none;
+  animation: fadeIn 1.5s ease;
+}
+
+.hero {
+  min-height: 100svh;
+  padding: 70px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(#fff3df, #f5d9b7);
+}
+
+.hero h2 {
+  font-size: clamp(15px, 4vw, 20px);
+  letter-spacing: 4px;
+  margin-bottom: 25px;
+}
+
+.names {
+  font-size: clamp(40px, 11vw, 58px);
+  color: #98651d;
+  line-height: 1.5;
+  animation: shimmer 3s infinite;
+}
+
+.amp {
+  font-size: 25px;
+  color: #702d26;
+}
+
+.subtitle {
+  margin-top: 25px;
+  font-size: clamp(17px, 4.5vw, 22px);
+  line-height: 1.8;
+}
+
+section {
+  padding: 75px 20px;
+  border-bottom: 1px solid #e4c99e;
+  min-height: 45vh;
+}
+
+section h2 {
+  color: #925b20;
+  font-size: clamp(27px, 7vw, 38px);
+  margin-bottom: 28px;
+}
+
+.card {
+  background: var(--cream-card);
+  padding: 25px;
+  margin: 16px auto;
+  max-width: 520px;
+  width: 100%;
+  border: 1px solid var(--gold-light);
+  border-radius: 22px;
+  box-shadow: 0 5px 20px #6a3b2115;
+}
+
+.card h3 {
+  margin-bottom: 12px;
+  color: var(--gold);
+  font-size: clamp(21px, 5.5vw, 27px);
+}
+
+.card p,
+section > p {
+  font-size: clamp(17px, 4.5vw, 21px);
+  line-height: 1.65;
+}
+
+.family-card h3:not(:first-child) {
+  margin-top: 25px;
+}
+
+.event-card {
+  padding: 28px 20px;
+}
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.countdown div {
+  background: #6a2922;
+  color: white;
+  padding: 15px 10px;
+  border-radius: 14px;
+  min-width: 68px;
+  box-shadow: 0 5px 14px #6a292233;
+}
+
+.countdown strong {
+  display: block;
+  font-size: 25px;
+  margin-bottom: 5px;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 14px 26px;
+  border-radius: 35px;
+  background: var(--maroon);
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+  transition: transform .25s ease, background .25s ease;
+}
+
+.btn:active {
+  transform: scale(.96);
+}
+
+#mute {
+  position: fixed;
+  right: 15px;
+  top: 15px;
+  z-index: 20;
+  display: none;
+  background: var(--maroon);
+  color: white;
+  border: none;
+  padding: 13px;
+  border-radius: 50%;
+  font-size: 19px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px #0002;
+}
+
+footer {
+  padding: 30px 15px;
+  color: #98651d;
+  background: #f5d9b7;
+  font-size: 14px;
+}
+
+/* SCROLL REVEAL ANIMATIONS */
+.reveal {
+  opacity: 0;
+  transform: translateY(55px);
+  transition: opacity 900ms ease, transform 900ms ease;
+}
+
+.reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-heading {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 800ms ease, transform 800ms ease;
+}
+
+.reveal-heading.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-card {
+  opacity: 0;
+  transform: translateY(45px) scale(.97);
+  transition: opacity 850ms ease, transform 850ms ease;
+}
+
+.reveal-card.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Different entrance timing for event cards */
+.event-card:nth-of-type(2) { transition-delay: .12s; }
+.event-card:nth-of-type(3) { transition-delay: .24s; }
+.event-card:nth-of-type(4) { transition-delay: .36s; }
+.event-card:nth-of-type(5) { transition-delay: .48s; }
+
+/* INTRO ANIMATIONS */
+@keyframes glow {
+  from { filter: drop-shadow(0 0 5px gold); }
+  to { filter: drop-shadow(0 0 30px gold); }
+}
+
+@keyframes pulse {
+  50% { transform: scale(1.06); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes shimmer {
+  50% { text-shadow: 0 0 15px #d6a94b; }
+}
+
+@keyframes float {
+  50% { transform: translateY(-10px); }
+}
+
+/* ACCESSIBILITY */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+  .reveal, .reveal-heading, .reveal-card {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+  
+/* BRIDE NAME ANIMATION */
+
+.bride-name {
+  display: block;
+  opacity: 0;
+  animation: brideReveal 1.5s ease forwards,
+             nameGlow 3s ease-in-out 1.5s infinite alternate;
+}
+
+/* AMPERSAND ANIMATION */
+
+.amp {
+  opacity: 0;
+  animation: ampReveal 1s ease 0.8s forwards;
+}
+
+/* GROOM NAME ANIMATION */
+
+.groom-name {
+  display: block;
+  opacity: 0;
+  animation: groomReveal 1.5s ease 1.2s forwards,
+             nameGlow 3s ease-in-out 2.7s infinite alternate;
+}
+
+/* TOP TO BOTTOM */
+
+@keyframes brideReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-60px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* ZOOM EFFECT */
+
+@keyframes ampReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* BOTTOM TO TOP */
+
+@keyframes groomReveal {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* GOLDEN GLOW */
+
+@keyframes nameGlow {
+  from {
+    text-shadow: 0 0 5px #d6ae69;
+  }
+  to {
+    text-shadow:
+      0 0 12px #d6ae69,
+      0 0 25px #f5d9a0;
+  }
+}
+
+  
+</style>
+</head>
+
+<body>
+
+<!-- OPENING SCREEN -->
+<div id="intro">
+  <div class="palace">🏰</div>
+  <h1>WEDDING</h1>
+  <p>YOU ARE INVITED</p>
+  <button id="enter" onclick="openWedding()">✨ Tap to Enter ✨</button>
+</div>
+
+<!-- MUSIC BUTTON -->
+<button id="mute" onclick="toggleMusic()" aria-label="Mute or unmute music">🔊</button>
+
+<!-- Add your music file at assets/wedding-music.mp3 -->
+<audio id="music" loop preload="none">
+  <source src="assets/wedding-music.mp3" type="audio/mpeg">
+</audio>
+
+<main id="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <h2>|| WEDDING INVITATION ||</h2>
+
+    
+<div class="names">
+  <span class="bride-name">Sahana</span>
+  <div class="amp">&</div>
+  <span class="groom-name">Kotresh</span>
+</div>
+
+
+    <p class="subtitle">
+      Together with our families<br>
+      We invite you to celebrate<br>
+      our beautiful beginning ❤️
+    </p>
+  </div>
+
+  <!-- FAMILY DETAILS -->
+  <section>
+    <h2>Our Families</h2>
+    <div class="card family-card">
+      <h3>Sahana's Family</h3>
+      <p>D/o Smt. Parvathi &amp; Sri KM Shivanandaiah Swamy</p>
+
+      <h3>Kotresh's Family</h3>
+      <p>S/o Smt. Bhuvaneshwari &amp; Sri RM. Shivayya Swamy</p>
+    </div>
+  </section>
+
+  <!-- WEDDING EVENTS -->
+  <section>
+    <h2>Wedding Events</h2>
+
+    <div class="card event-card">
+      <h3>🌼 Haldi</h3>
+      <p>Date &amp; Time to be announced</p>
+    </div>
+
+    <div class="card event-card">
+      <h3>🌿 Mehendi</h3>
+      <p>Date &amp; Time to be announced</p>
+    </div>
+
+    <div class="card event-card">
+      <h3>💍 Wedding</h3>
+      <p>Sunday, 15th November 2026</p>
+      <p>Time: 6:45 AM – 7:30 AM</p>
+    </div>
+
+    <div class="card event-card">
+      <h3>🥂 Reception</h3>
+      <p>Wednesday, 18th November 2026</p>
+      <p>Time: 11:00 AM</p>
+    </div>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section>
+    <h2>Wedding Countdown</h2>
+    <div class="countdown">
+      <div><strong id="days">00</strong>Days</div>
+      <div><strong id="hours">00</strong>Hours</div>
+      <div><strong id="minutes">00</strong>Minutes</div>
+      <div><strong id="seconds">00</strong>Seconds</div>
+    </div>
+    <p id="countdownMessage" style="margin-top:20px;"></p>
+  </section>
+
+  <!-- VENUE -->
+  <section>
+    <h2>Wedding Venue</h2>
+    <div class="card">
+      <h3>📍 Wedding Location</h3>
+      <p>Grooms Residency, Ramdurgam Village, Alur Taluk, Kurnool District</p>
+      <a class="btn"
+         href="https://maps.app.goo.gl/LxqbgSoSQnFqsHSF6"
+         target="_blank" rel="noopener">
+        View Google Maps
+      </a>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section>
+    <h2>RSVP</h2>
+    <p>We would love to celebrate with you!</p>
+    <a class="btn"
+       href="https://wa.me/919885887310?text=Congratulations%21%20I%20will%20attend"
+       target="_blank" rel="noopener">
+      Send on WhatsApp
+    </a>
+  </section>
+
+  <!-- THANK YOU -->
+  <section>
+    <h2>Thank You ❤️</h2>
+    <p>Your presence is our greatest gift.</p>
+  </section>
+
+  <footer>
+    Made with love for Sahana &amp; Kotresh ❤️
+  </footer>
+
+</main>
+
+<script>
+/* OPEN INVITATION */
+function openWedding() {
+  const intro = document.getElementById("intro");
+  const main = document.getElementById("main");
+  const music = document.getElementById("music");
+
+  music.play().catch(() => {
+    // Music may need a valid audio file in the assets folder.
+  });
+
+  intro.style.opacity = "0";
+
+  setTimeout(() => {
+    intro.style.display = "none";
+    main.style.display = "block";
+    document.getElementById("mute").style.display = "block";
+
+    // Start reveal observer after invitation becomes visible.
+    startScrollAnimations();
+  }, 1500);
+}
+
+/* MUTE / UNMUTE MUSIC */
+function toggleMusic() {
+  const music = document.getElementById("music");
+  const muteButton = document.getElementById("mute");
+
+  if (music.paused) {
+    music.play().then(() => {
+      muteButton.innerText = "🔊";
+    }).catch(() => {
+      muteButton.innerText = "🔇";
+    });
+  } else {
+    music.pause();
+    muteButton.innerText = "🔇";
+  }
+}
+
+/* WEDDING COUNTDOWN
+   Wedding date/time: 15 November 2026, 6:45 AM
+   India Standard Time: UTC+05:30
+*/
+const weddingDate = new Date("2026-11-15T06:45:00+05:30").getTime();
+
+function updateCountdown() {
+  const distance = weddingDate - Date.now();
+  const message = document.getElementById("countdownMessage");
+
+  if (distance <= 0) {
+    document.getElementById("days").innerText = "00";
+    document.getElementById("hours").innerText = "00";
+    document.getElementById("minutes").innerText = "00";
+    document.getElementById("seconds").innerText = "00";
+    message.innerText = "Wishing the couple a beautiful married life! ❤️";
+    return;
+  }
+
+  document.getElementById("days").innerText =
+    Math.floor(distance / 86400000);
+
+  document.getElementById("hours").innerText =
+    Math.floor((distance % 86400000) / 3600000);
+
+  document.getElementById("minutes").innerText =
+    Math.floor((distance % 3600000) / 60000);
+
+  document.getElementById("seconds").innerText =
+    Math.floor((distance % 60000) / 1000);
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+/* SCROLL REVEAL ANIMATIONS
+   Elements animate when they enter the screen.
+   They animate again when the visitor scrolls away and returns.
+*/
+let scrollObserver;
+
+function startScrollAnimations() {
+  const main = document.getElementById("main");
+
+  if (!("IntersectionObserver" in window)) {
+    main.querySelectorAll("section, section h2, .card, .countdown div")
+      .forEach(element => element.classList.add("show"));
+    return;
+  }
+
+  if (scrollObserver) {
+    scrollObserver.disconnect();
+  }
+
+  const revealElements = main.querySelectorAll(
+    "section, section h2, .card, .countdown div"
+  );
+
+  revealElements.forEach(element => {
+    if (element.matches("section h2")) {
+      element.classList.add("reveal-heading");
+    } else if (element.matches(".card, .countdown div")) {
+      element.classList.add("reveal-card");
+    } else {
+      element.classList.add("reveal");
+    }
+  });
+
+  scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+      } else {
+        entry.target.classList.remove("show");
+      }
+    });
+  }, {
+    threshold: 0.15,
+    rootMargin: "0px 0px -35px 0px"
+  });
+
+  revealElements.forEach(element => scrollObserver.observe(element));
+}
+</script>
+
+</body>
+</html>
